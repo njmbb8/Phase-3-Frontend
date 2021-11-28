@@ -1,38 +1,98 @@
-.App {
+body{
+  background-color: #282c34;
+  height: 100%
+}
+
+#navbar{
+  display: grid;
+  grid-template-rows: 1fr .5fr 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  text-align: end;
+  width: max-content;
+  position: fixed;
+}
+
+#navbar a{
+  text-decoration: none;
+}
+
+#logo p{
+  font-family: "Arial Black", Gadget, sans-serif;
+font-size: 50px;
+letter-spacing: -5px;
+word-spacing: 6px;
+color: #000000;
+font-weight: 700;
+text-decoration: underline solid rgb(68, 68, 68);
+font-style: normal;
+font-variant: normal;
+text-transform: none;
+margin: 0px;
+}
+
+#face { 
+  grid-area: 1 / 1 / 2 / 2;;
+}
+
+#face img{
+  width:100%;
+  height: auto;
+}
+#logo { grid-area: 2 / 1 / 3 / 2; }
+
+#links { 
+  grid-area: 2 / 1 / 4 / 2;
+  display: grid;
+  align-items: end;
+ }
+
+#content{
+  height: auto;
+  width: 100%;
+}
+
+#item-display{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  grid-gap: 15px;
+}
+
+figure {
+  display: flex;
+  flex-flow: column;
+  padding: 5px;
+  max-width: 15vw;
+  margin: auto;
+}
+
+figcaption {
+  background-color: #222;
+  color: #fff;
+  font: italic smaller sans-serif;
+  padding: 3px;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.App{
+  display: grid;
+  grid-template-columns: .25fr 1fr;
+  grid-template-rows: 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+#ItemInfo {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 2fr .25fr .25fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  justify-items: center;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#ItemInfo img{
+  max-width:50vw;
+  max-height:75vh;
 }
