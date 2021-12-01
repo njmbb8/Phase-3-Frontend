@@ -85,14 +85,42 @@ figcaption {
 
 #ItemInfo {
   display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 2fr .25fr .25fr;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 2fr repeat(2, .25fr);
   grid-column-gap: 0px;
   grid-row-gap: 0px;
   justify-items: center;
 }
 
 #ItemInfo img{
+  grid-area: 1 / 1 / 2 / 3;
   max-width:50vw;
   max-height:75vh;
+}
+
+#ItemInfo h1{
+  grid-area: 2 / 1 / 3 / 3;
+}
+
+#ItemInfo h3{
+  grid-area: 3 / 1 / 4 / 3;
+}
+
+#editButton{
+  grid-area: 4 / 1 / 5 / 2;
+  background-color: lightblue;
+}
+
+#deleteButton {
+  grid-area: 4 / 2 / 5 / 3;
+  background-color: lightcoral;
+}
+
+.button{
+  text-align: center;
+  width: 100%;
+}
+
+.button:hover{
+  cursor: pointer;
 }

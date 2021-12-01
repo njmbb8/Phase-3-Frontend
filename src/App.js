@@ -56,7 +56,7 @@ function App() {
             <ItemSelector items={items} />
           </Route>
           <Route path = '/items/:itemId' >
-            <ItemInfo items={items}/>
+            <ItemInfo items={items} dispatch={dispatch}/>
           </Route>
           <Route path='/additems' >
             <ItemAdder items={items} dispatch={dispatch} />

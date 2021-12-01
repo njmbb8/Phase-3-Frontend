@@ -11,8 +11,8 @@ function ItemSelector({items}){
     }
     return(
         <div id="item-display">
-            {items.map((item) => <ItemCard item={item} key={item.id} />)}
             <ItemCard item={emptyItem} />
+            {items.map((item) => <ItemCard item={item} key={item.id} />)}
         </div>
     )
 }
