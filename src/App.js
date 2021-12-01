@@ -5,31 +5,31 @@ import Navbar from './Navbar';
 import { useEffect, useReducer } from 'react';
 import ItemSelector from './ItemSelector';
 import ItemInfo from './ItemInfo';
-import { useParams, useRouteMatch } from "react-router";
+import ItemAdder from './ItemAdder';
 
 function reducer(state, action){
   switch (action.type) {
-    case "Loading":
-      return{
-        isReady: false,
-        message: "Loading",
-      }
     case "Ready":
       return{
         isReady: true,
         items: action.payload
       }
+    case "Unready":
+      return{
+        isReady: false,
+        message: "Loading..."
+      }
     case "Error":
       return {
-
+        isReady: false,
+        message: `${action.payload.name}: ${action.payload.message}`
       }
     default:
-      break;
+      return state
   }
 }
 
 function App() {
-  const params = useParams()
   const [state, dispatch] = useReducer(reducer, {
     isReady: false,
     items: {},
@@ -39,7 +39,7 @@ function App() {
   const {isReady, items, message} = state
 
   useEffect(() => {
-    dispatch({ type: "Loading"})
+    dispatch({ type: "Unready"})
     fetch('http://localhost:9292/items')
     .then((data) => data.json())
     .then((ret) => dispatch({type: "Ready", payload: ret}))
@@ -57,6 +57,9 @@ function App() {
           </Route>
           <Route path = '/items/:itemId' >
             <ItemInfo items={items}/>
+          </Route>
+          <Route path='/additems' >
+            <ItemAdder items={items} dispatch={dispatch} />
           </Route>
         </Switch>
         :

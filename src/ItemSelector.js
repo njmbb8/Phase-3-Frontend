@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 function ItemSelector({items}){
     const emptyItem = {
+        id:0,
         image: 'question.jpg',
         name: 'add an item',
         price: '0'
@@ -11,9 +12,7 @@ function ItemSelector({items}){
     return(
         <div id="item-display">
             {items.map((item) => <ItemCard item={item} key={item.id} />)}
-            <Link to='/additem'>
-                <ItemCard item={emptyItem} />
-            </Link>
+            <ItemCard item={emptyItem} />
         </div>
     )
 }
