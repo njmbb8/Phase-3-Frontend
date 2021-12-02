@@ -50,7 +50,8 @@ function ItemEditor({items, dispatch}){
                     body: formData
                 })
             }
-            dispatch({type: 'Ready', payload: items.map((temp) => temp.id !== ret.id ? temp : ret)})
+            dispatch({type: 'Loaded Items', payload: items.map((temp) => temp.id !== ret.id ? temp : ret)})
+            dispatch({type: "Ready"})
         })
         .catch((error) => dispatch({type: "Error", payload: error}))
     }

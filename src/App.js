@@ -9,6 +9,7 @@ import ItemAdder from './ItemAdder';
 import ItemEditor from './ItemEditor';
 import UserBrowser from './UserBrowser';
 import UserPage from './UserPage';
+import AddUserForm from './AddUserForm';
 
 function reducer(state, action){
   switch (action.type) {
@@ -94,7 +95,10 @@ function App() {
             <UserBrowser users={users} />
           </Route>
           <Route path='/users/:userId' >
-            <UserPage users={users} dispatch={dispatch}/>
+            <UserPage users={users} dispatch={dispatch} />
+          </Route>
+          <Route path='/adduser' >
+            <AddUserForm users={users} dispatch={dispatch} />
           </Route>
         </Switch>
         :
