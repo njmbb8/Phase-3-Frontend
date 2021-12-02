@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, Link } from "react-router-dom";
 
 function ItemInfo({items, dispatch}){
     const params = useParams()
@@ -24,7 +24,10 @@ function ItemInfo({items, dispatch}){
             <img id="itemImage" src={`http://localhost:9292/images/${item.image}`} />
             <h1 id="itemName">{item.name}</h1>
             <h3 id="itemPrice">{item.price}</h3>
-            <div id="editButton" className="button">Edit</div>
+            <Link to={`/editItem/${item.id}`} id="editButton" className="button" >
+                {/* <div id="editButton" className="button">Edit</div> */}
+                Edit
+            </Link>
             <div id="deleteButton" className="button" onClick = {deleteItem}>Delete</div>
         </div>
     )

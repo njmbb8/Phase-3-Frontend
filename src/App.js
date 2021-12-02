@@ -6,6 +6,7 @@ import { useEffect, useReducer } from 'react';
 import ItemSelector from './ItemSelector';
 import ItemInfo from './ItemInfo';
 import ItemAdder from './ItemAdder';
+import ItemEditor from './ItemEditor';
 
 function reducer(state, action){
   switch (action.type) {
@@ -60,6 +61,9 @@ function App() {
           </Route>
           <Route path='/additems' >
             <ItemAdder items={items} dispatch={dispatch} />
+          </Route>
+          <Route path='/editItem/:itemId' >
+            <ItemEditor items={items} dispatch={dispatch} />
           </Route>
         </Switch>
         :
