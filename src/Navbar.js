@@ -20,7 +20,7 @@ function Navbar(){
                     Products
                 </NavLink>
                 <NavLink
-                    to="/gallery"
+                    to="/users"
                     style={linkStyles}
                 >
                     Users

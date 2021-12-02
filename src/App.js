@@ -7,13 +7,26 @@ import ItemSelector from './ItemSelector';
 import ItemInfo from './ItemInfo';
 import ItemAdder from './ItemAdder';
 import ItemEditor from './ItemEditor';
+import UserBrowser from './UserBrowser';
 
 function reducer(state, action){
   switch (action.type) {
     case "Ready":
       return{
-        isReady: true,
-        items: action.payload
+        ...state,
+        isReady: true
+      }
+    case "Loaded Items":
+      return{
+        ...state,
+        items: action.payload,
+        message: "Loaded Items"
+      }
+    case "Loaded Users":
+      return{
+        ...state,
+        users: action.payload,
+        message: "Loaded Users"
       }
     case "Unready":
       return{
@@ -22,6 +35,7 @@ function reducer(state, action){
       }
     case "Error":
       return {
+        ...state,
         isReady: false,
         message: `${action.payload.name}: ${action.payload.message}`
       }
@@ -34,16 +48,25 @@ function App() {
   const [state, dispatch] = useReducer(reducer, {
     isReady: false,
     items: {},
+    users: {},
     message: "Hello"
   })
 
-  const {isReady, items, message} = state
+  const {isReady, items, users, message} = state
 
   useEffect(() => {
     dispatch({ type: "Unready"})
     fetch('http://localhost:9292/items')
     .then((data) => data.json())
-    .then((ret) => dispatch({type: "Ready", payload: ret}))
+    .then((ret) => dispatch({type: "Loaded Items", payload: ret}))
+    .then(()=>{
+      fetch('http://localhost:9292/users')
+      .then((data) => data.json())
+      .then((ret) => dispatch({type: "Loaded Users", payload: ret}))
+      .catch((error) => dispatch({type: "Error", payload: error}))
+    })
+    .then(()=> dispatch({type: "Ready"}))
+    .catch((error) => dispatch({type: "Error", payload: error})) 
   }, [])
 
   return (
@@ -64,6 +87,9 @@ function App() {
           </Route>
           <Route path='/editItem/:itemId' >
             <ItemEditor items={items} dispatch={dispatch} />
+          </Route>
+          <Route path='/users' >
+            <UserBrowser users={users} />
           </Route>
         </Switch>
         :

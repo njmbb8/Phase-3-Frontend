@@ -124,3 +124,11 @@ figcaption {
 .button:hover{
   cursor: pointer;
 }
+
+.userRow{
+  display:flex;
+  background-color: lightgray;
+  border:black 1px solid;
+  margin: 5px;
+  justify-content: space-between;
+}
