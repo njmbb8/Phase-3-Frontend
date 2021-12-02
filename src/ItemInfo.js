@@ -14,7 +14,8 @@ function ItemInfo({items, dispatch}){
         })
         .then(() => {
             history.push('/')
-            dispatch({type: "Ready", payload: items.filter((index) => index.id !== item.id)})
+            dispatch({type: "Loaded Items", payload: items.filter((index) => index.id !== item.id)})
+            dispatch({type: "Ready"})
         })
         .catch((error) => console.log(error))
     }

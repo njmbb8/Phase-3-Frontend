@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import OrderListItem from "./OrderListItem";
 
 function UserPage({users, dispatch}){
@@ -10,6 +10,7 @@ function UserPage({users, dispatch}){
     const [firstName, setFirstName] = useState(user.first_name)
     const [lastName, setLastName] = useState(user.last_name)
     const [address, setAddress] = useState(user.address)
+    const history = useHistory()
 
     function handleFNameChange(event){
         setFirstName(event.target.value)
@@ -44,6 +45,18 @@ function UserPage({users, dispatch}){
         })
     }
 
+    function deleteUser(event){
+        dispatch({type: 'Unready', payload: 'Deleting Item...'})
+        fetch(`http://localhost:9292/users/${user.id}`,{
+            method: "DELETE"
+        })
+        .then(()=>{
+            dispatch({type:"Loaded Users", payload: users.filter((index) => index.id !== user.id)})
+            history.push('/users')
+            dispatch({type: "Ready"})
+        })
+    }
+
     useEffect(()=>{
         fetch(`http://localhost:9292/users/${user.id}/orders`)
         .then((data) => data.json())
@@ -70,6 +83,7 @@ function UserPage({users, dispatch}){
                     {orders.map((order) => <OrderListItem order={order} key={order.id} />)}
                 </ul>
             </div>
+            <div id="deleteUser" onClick={deleteUser}><h2>DELETE USER</h2></div>
         </div>
     )
 }
