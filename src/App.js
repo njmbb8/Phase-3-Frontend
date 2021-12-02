@@ -8,6 +8,7 @@ import ItemInfo from './ItemInfo';
 import ItemAdder from './ItemAdder';
 import ItemEditor from './ItemEditor';
 import UserBrowser from './UserBrowser';
+import UserPage from './UserPage';
 
 function reducer(state, action){
   switch (action.type) {
@@ -30,6 +31,7 @@ function reducer(state, action){
       }
     case "Unready":
       return{
+        ...state,
         isReady: false,
         message: "Loading..."
       }
@@ -63,9 +65,9 @@ function App() {
       fetch('http://localhost:9292/users')
       .then((data) => data.json())
       .then((ret) => dispatch({type: "Loaded Users", payload: ret}))
+      .then(()=> dispatch({type: "Ready"}))
       .catch((error) => dispatch({type: "Error", payload: error}))
     })
-    .then(()=> dispatch({type: "Ready"}))
     .catch((error) => dispatch({type: "Error", payload: error})) 
   }, [])
 
@@ -88,8 +90,11 @@ function App() {
           <Route path='/editItem/:itemId' >
             <ItemEditor items={items} dispatch={dispatch} />
           </Route>
-          <Route path='/users' >
+          <Route exact path='/users' >
             <UserBrowser users={users} />
+          </Route>
+          <Route path='/users/:userId' >
+            <UserPage users={users} dispatch={dispatch}/>
           </Route>
         </Switch>
         :

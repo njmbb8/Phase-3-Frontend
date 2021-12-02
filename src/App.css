@@ -125,7 +125,7 @@ figcaption {
   cursor: pointer;
 }
 
-.userRow{
+.listRow{
   display:flex;
   background-color: lightgray;
   border:black 1px solid;
