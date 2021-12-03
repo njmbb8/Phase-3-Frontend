@@ -1,9 +1,10 @@
 import React from "react";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 
 function ItemEditor({items, dispatch}){
     const params = useParams()
+    const history = useHistory()
     const item = items.filter((item) => parseInt(params.itemId) === item.id)[0]
     const [name, setName] = useState(item.name)
     const [price, setPrice] = useState(item.price)
@@ -51,6 +52,7 @@ function ItemEditor({items, dispatch}){
                 })
             }
             dispatch({type: 'Loaded Items', payload: items.map((temp) => temp.id !== ret.id ? temp : ret)})
+            history.push('/')
             dispatch({type: "Ready"})
         })
         .catch((error) => dispatch({type: "Error", payload: error}))
