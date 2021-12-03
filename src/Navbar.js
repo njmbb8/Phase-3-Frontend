@@ -26,16 +26,10 @@ function Navbar(){
                     Users
                 </NavLink>
                 <NavLink
-                    to="/commision"
+                    to="/orders"
                     style={linkStyles}
                 >
                     Orders
-                </NavLink>
-                <NavLink
-                    to="/news"
-                    style={linkStyles}
-                >
-                    New Order
                 </NavLink>
             </div>
         </div>

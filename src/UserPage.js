@@ -4,7 +4,6 @@ import { useParams, useHistory } from "react-router-dom";
 import OrderListItem from "./OrderListItem";
 
 function UserPage({users, dispatch}){
-    const [orders, setOrders] = useState([])
     const params = useParams()
     const user = users.filter((user) => user.id === parseInt(params.userId))[0]
     const [firstName, setFirstName] = useState(user.first_name)
@@ -41,6 +40,7 @@ function UserPage({users, dispatch}){
         .then((data) => data.json())
         .then((ret) => {
             dispatch({type:"Loaded Users", payload: users.map((temp) => temp.id !== ret.id ? temp : ret)})
+            history.push('/users')
             dispatch({type: "Ready"})
         })
     }
@@ -57,14 +57,14 @@ function UserPage({users, dispatch}){
         })
     }
 
-    useEffect(()=>{
-        fetch(`http://localhost:9292/users/${user.id}/orders`)
-        .then((data) => data.json())
-        .then((ret) => {
-            setOrders(ret)
-        })
-        .catch((error) => dispatch({type: "Error", payload: error}))
-    }, [])
+    // useEffect(()=>{
+    //     fetch(`http://localhost:9292/users/${user.id}/orders`)
+    //     .then((data) => data.json())
+    //     .then((ret) => {
+    //         setOrders(ret)
+    //     })
+    //     .catch((error) => dispatch({type: "Error", payload: error}))
+    // }, [])
     
     return (
         <div>
@@ -80,7 +80,7 @@ function UserPage({users, dispatch}){
             <div id="orders">
                 <h1>Orders:</h1>
                 <ul>
-                    {orders.map((order) => <OrderListItem order={order} key={order.id} />)}
+                    {user.orders.map((order) => <OrderListItem order={order} key={order.id} />)}
                 </ul>
             </div>
             <div id="deleteUser" onClick={deleteUser}><h2>DELETE USER</h2></div>

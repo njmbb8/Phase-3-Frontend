@@ -10,6 +10,10 @@ import ItemEditor from './ItemEditor';
 import UserBrowser from './UserBrowser';
 import UserPage from './UserPage';
 import AddUserForm from './AddUserForm';
+import OrderPage from './OrderPage';
+import OrderList from './OrderList';
+import OrderAdder from './OrderAdder';
+import AddItemToOrder from './AddItemToOrder';
 
 function reducer(state, action){
   switch (action.type) {
@@ -29,6 +33,12 @@ function reducer(state, action){
         ...state,
         users: action.payload,
         message: "Loaded Users"
+      }
+    case "Loaded Orders":
+      return{
+        ...state,
+        orders: action.payload,
+        message: "Loaded Orders"
       }
     case "Unready":
       return{
@@ -52,10 +62,11 @@ function App() {
     isReady: false,
     items: {},
     users: {},
+    orders: {},
     message: "Hello"
   })
 
-  const {isReady, items, users, message} = state
+  const {isReady, items, users, orders, message} = state
 
   useEffect(() => {
     dispatch({ type: "Unready"})
@@ -66,7 +77,12 @@ function App() {
       fetch('http://localhost:9292/users')
       .then((data) => data.json())
       .then((ret) => dispatch({type: "Loaded Users", payload: ret}))
-      .then(()=> dispatch({type: "Ready"}))
+      .then(()=> {
+        fetch("http://localhost:9292/orders")
+        .then((data) => data.json())
+        .then((ret) => dispatch({type:"Loaded Orders", payload: ret}))
+        .then(()=> dispatch({type: "Ready"}))
+      })
       .catch((error) => dispatch({type: "Error", payload: error}))
     })
     .catch((error) => dispatch({type: "Error", payload: error})) 
@@ -99,6 +115,18 @@ function App() {
           </Route>
           <Route path='/adduser' >
             <AddUserForm users={users} dispatch={dispatch} />
+          </Route>
+          <Route exact path='/orders' >
+            <OrderList orders={orders} />
+          </Route>
+          <Route exact path='/orders/:orderId' >
+            <OrderPage users={users} orders={orders} items={items} dispatch={dispatch} />
+          </Route>
+          <Route path='/addorder' >
+            <OrderAdder users={users} orders={orders} dispatch={dispatch} />
+          </Route>
+          <Route path='/orders/:orderID/addcontents' >
+            <AddItemToOrder items={items} orders={orders} dispatch={dispatch} />
           </Route>
         </Switch>
         :
